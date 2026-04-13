@@ -21,11 +21,13 @@ const PORT   = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// ✅ ADD THIS LINE
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: '🟢 CollabSpace API is running', timestamp: new Date().toISOString() });
-});
 
 app.use('/api/auth',         authRoutes);
 app.use('/api/projects',     projectsRoutes);
