@@ -1233,6 +1233,36 @@
 </script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-<script src="api.js"></script>
+<script src="/api.js"></script>
+<script>
+async function doLogin() {
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-pass").value;
+
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    // 🔥 MAIN FIX
+    localStorage.setItem("token", data.token);
+
+    alert("Login successful");
+
+    // go to dashboard
+    document.getElementById("auth").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+
+  } catch (err) {
+    alert("Login failed");
+  }
+}
+</script>
 </body>
 </html>
